@@ -2,6 +2,7 @@ package com.blueweb.springboot.diamond_project.backend.diamond_project_backend.c
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,13 +34,12 @@ public class ProductController {
     @PostMapping()
     public ResponseEntity<Product> create(@Valid @RequestBody Product product, BindingResult result) {
         //TODO: REGISTRATION PROCESS
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @PutMapping("/{id}")
     public Product update(@PathVariable Long id, @RequestBody Product product) {
         //TODO: process PUT request
-        
         return product;
     }
 
@@ -48,6 +48,4 @@ public class ProductController {
         //TODO: call service delete (productRepository.deleteById)
         return null;
     }
-
-
 }
