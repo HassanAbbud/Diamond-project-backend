@@ -1,5 +1,7 @@
 package com.blueweb.springboot.diamond_project.backend.diamond_project_backend.controllers;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -18,14 +22,18 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/users")
 public class UserController {  
 
+
+    @GetMapping()
+    public List<User> listUsers() {
+        //TODO: Call service find all users
+        return null;
+    }
+    
     //Validates User from request body against validators in User entity
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody User user, BindingResult result) {
+    public ResponseEntity<User> register(@Valid @RequestBody User user, BindingResult result) {
         //TODO: REGISTRATION PROCESS
         return null;
     }
-
-
-    
 
 }
