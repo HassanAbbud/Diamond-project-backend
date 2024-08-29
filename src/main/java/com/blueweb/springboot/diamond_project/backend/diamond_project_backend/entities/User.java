@@ -1,5 +1,7 @@
 package com.blueweb.springboot.diamond_project.backend.diamond_project_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,7 @@ public class User {
     private String usuario;
 
     @NotNull(message = "No puede ser nulo")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //Don't show password in JSON
     private String pass;
 
     @NotNull(message = "No puede ser nulo")
