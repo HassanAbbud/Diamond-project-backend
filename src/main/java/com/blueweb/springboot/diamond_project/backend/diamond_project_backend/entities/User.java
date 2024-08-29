@@ -11,12 +11,12 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "users")
+@Table(name = "sUsuario", schema = "dbo")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    private Integer idUsuario;
 
     @NotNull(message = "No puede ser nulo")
     @Size(max = 12, message = "El usuario no puede tener más de 12 caracteres")
@@ -35,10 +35,10 @@ public class User {
     @Pattern(regexp = "\\d{10}", message = "Numero tiene que contener 10 dígitos.")
     private String telefono;
 
-    public Long getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
-    public void setIdUsuario(Long id) {
+    public void setIdUsuario(Integer id) {
         this.idUsuario = id;
     }
     public String getUsuario() {
@@ -71,5 +71,11 @@ public class User {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    @Override
+    public String toString() {
+        return "User [idUsuario=" + idUsuario + ", usuario=" + usuario + ", pass=" + pass + ", nombreCompleto="
+                + nombreCompleto + ", correo=" + correo + ", telefono=" + telefono + "]";
+    }
+    
     
 }
