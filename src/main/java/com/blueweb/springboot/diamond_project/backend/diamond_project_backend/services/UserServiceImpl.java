@@ -34,8 +34,30 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
+
+    @Override
+    @Transactional
+    public Optional<User> updatePassword(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User userDb = optionalUser.orElseThrow();
+            userDb.setPass(passwordEncoder.encode(userDb.getPass()));
+            return Optional.of(userRepository.save(userDb));
+        }
+        return optionalUser;
+    }
+
+    @Override
+    @Transactional
+    public Optional<User> delete(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        optionalUser.ifPresent(userDb -> userRepository.deleteById(id));
+        return optionalUser;
+    }
+
     
 }

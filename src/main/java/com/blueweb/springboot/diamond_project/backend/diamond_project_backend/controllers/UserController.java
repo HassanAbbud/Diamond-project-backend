@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -54,6 +57,21 @@ public class UserController {
             return validation(result);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(user));
+    }
+
+    //FOR TESTING(setting encrypted password)
+    @PutMapping("/secure-password/{id}")
+    public ResponseEntity<?> updatePassword(@PathVariable Long id) {
+        Optional<User> optionalUser = userService.updatePassword(id);
+        if (optionalUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(optionalUser.orElseThrow());        
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping()
+    public void deleteUser(Long id){
+        userService.delete(id);
     }
 
     private ResponseEntity<?> validation(BindingResult result) {

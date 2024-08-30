@@ -18,7 +18,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUsuario;
+    private Long idUsuario;
 
     @NotNull(message = "No puede ser nulo")
     @Size(max = 12, message = "El usuario no puede tener más de 12 caracteres")
@@ -38,10 +38,10 @@ public class User {
     @Pattern(regexp = "\\d{10}", message = "Numero tiene que contener 10 dígitos.")
     private String telefono;
 
-    public Integer getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
-    public void setIdUsuario(Integer id) {
+    public void setIdUsuario(Long id) {
         this.idUsuario = id;
     }
     public String getUsuario() {
@@ -73,6 +73,56 @@ public class User {
     }
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+        result = prime * result + ((pass == null) ? 0 : pass.hashCode());
+        result = prime * result + ((nombreCompleto == null) ? 0 : nombreCompleto.hashCode());
+        result = prime * result + ((correo == null) ? 0 : correo.hashCode());
+        result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
+        return result;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (usuario == null) {
+            if (other.usuario != null)
+                return false;
+        } else if (!usuario.equals(other.usuario))
+            return false;
+        if (pass == null) {
+            if (other.pass != null)
+                return false;
+        } else if (!pass.equals(other.pass))
+            return false;
+        if (nombreCompleto == null) {
+            if (other.nombreCompleto != null)
+                return false;
+        } else if (!nombreCompleto.equals(other.nombreCompleto))
+            return false;
+        if (correo == null) {
+            if (other.correo != null)
+                return false;
+        } else if (!correo.equals(other.correo))
+            return false;
+        if (telefono == null) {
+            if (other.telefono != null)
+                return false;
+        } else if (!telefono.equals(other.telefono))
+            return false;
+        return true;
     }
     @Override
     public String toString() {
