@@ -27,8 +27,7 @@ public class Empresa {
     private String nombreEmpresa;
 
     @NotNull
-    @JoinColumn(name = "activo")
-    private boolean active;
+    private boolean activo;
 
     @Embedded
     private Auditable audit = new Auditable();
@@ -61,12 +60,12 @@ public class Empresa {
         this.nombreEmpresa = nombreEmpresa;
     }
 
-    public boolean isActive() {
-        return active;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public Auditable getAudit() {

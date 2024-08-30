@@ -50,7 +50,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "idUsuario")
-    private User idUsuario;
+    private User usuario;
 
     public Long getIdProducto() {
         return idProducto;
@@ -109,11 +109,11 @@ public class Product {
     }
 
     public User getIdUsuario() {
-        return idUsuario;
+        return usuario;
     }
 
-    public void setIdUsuario(User idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdUsuario(User usuario) {
+        this.usuario = usuario;
     }
 
 
