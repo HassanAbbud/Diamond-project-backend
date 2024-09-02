@@ -21,6 +21,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.repositories.UserRepository;
 import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.security.filters.JwtAuthenticationFilter;
 import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.security.filters.JwtValidationFilter;
 
@@ -30,6 +31,9 @@ public class SpringSecurity {
 
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Bean
     AuthenticationManager authenticationManager() throws Exception {
@@ -47,10 +51,9 @@ public class SpringSecurity {
             .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
             .requestMatchers(HttpMethod.PUT, "/api/users/secure-password/{id}").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/users/{id}").authenticated()
-            .anyRequest().authenticated()) 
+            .anyRequest().authenticated()) //authenticated testing 
         .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-        .addFilter(new JwtValidationFilter(authenticationManager()))
+        .addFilter(new JwtValidationFilter(authenticationManager(), userRepository))
         .csrf(csrf -> csrf.disable())
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

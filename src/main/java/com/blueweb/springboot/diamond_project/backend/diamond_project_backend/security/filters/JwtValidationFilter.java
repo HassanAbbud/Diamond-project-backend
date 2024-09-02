@@ -10,6 +10,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.entities.User;
+import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.repositories.UserRepository;
+import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.security.CustomUserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
@@ -25,9 +28,12 @@ import static com.blueweb.springboot.diamond_project.backend.diamond_project_bac
 
 
 public class JwtValidationFilter extends BasicAuthenticationFilter {
+    
+    private UserRepository userRepository;
 
-    public JwtValidationFilter(AuthenticationManager authenticationManager) {
+    public JwtValidationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
         super(authenticationManager);
+        this.userRepository = userRepository;
     }
 
     //Validate JWT token for every subsequent request (specified in filter chain)
@@ -45,11 +51,18 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
         try {
             Claims claims = Jwts.parser().verifyWith(SECRET_KEY).build().parseSignedClaims(token).getPayload();
-            String username = claims.getSubject();
-            // String username2 = (String) claims.get("username");
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, null);
-            SecurityContextHolder .getContext().setAuthentication(authenticationToken);
+            Integer userId = (Integer) claims.get("idUsuario"); // Ensure this matches the type used in the JWT
+
+            // Convert userId to Long 
+            Long userIdLong = userId.longValue(); 
+
+            // Retrieve user details and set authentication
+            User user = userRepository.findById(userIdLong).orElseThrow();
+            CustomUserDetails userDetails = new CustomUserDetails(user);
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, null);
+            
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
         } catch (JwtException e) {
             Map<String, String> body = new HashMap<>();

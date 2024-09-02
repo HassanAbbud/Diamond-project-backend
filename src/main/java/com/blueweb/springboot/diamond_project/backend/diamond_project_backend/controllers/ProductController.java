@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.entities.Product;
-import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.entities.User;
 import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -49,7 +48,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id, @RequestBody User user){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         //TODO: call service delete (productRepository.deleteById)
         return null;
     }

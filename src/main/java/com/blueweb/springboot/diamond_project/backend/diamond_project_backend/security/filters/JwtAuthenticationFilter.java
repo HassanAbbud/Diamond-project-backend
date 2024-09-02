@@ -12,6 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.entities.User;
+import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.security.CustomUserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
@@ -35,34 +36,37 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException {
-    User user = null;
-    String usuario = null;
-    String password = null;
+        User user = null;
+        String usuario = null;
+        String password = null;
 
-    try {
-        user = new ObjectMapper().readValue(request.getInputStream(), User.class);
-        usuario = user.getUsuario();
-        password = user.getPass();
-    } catch (IOException e) {
-        throw new RuntimeException("Failed to parse authentication request", e);
+        try {
+            user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+            usuario = user.getUsuario();
+            password = user.getPass();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to parse authentication request", e);
+        }
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(usuario, password);
+
+        Authentication result = authenticationManager.authenticate(authenticationToken);
+        return result;
     }
-
-    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(usuario, password);
-
-    Authentication result = authenticationManager.authenticate(authenticationToken);
-    return result;
-}
 
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
-                org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authResult.getPrincipal();
+                
+        CustomUserDetails userDetails = (CustomUserDetails) authResult.getPrincipal();
         
-        String username = user.getUsername();
+        String username = userDetails.getUsername();
+        Long userId = userDetails.getIdUsuario();
 
         Claims claims = Jwts.claims() // adding roles to claims
                 .add("usuario", username)
+                .add("idUsuario", userId)
         .build();
 
         
@@ -80,6 +84,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Map<String, String> body = new HashMap<>();
         body.put("token", token);
         body.put("usuario", username);
+        body.put("idUsuario", Long.toString(userId));
         body.put("message", String.format("Welcome %s you have successfully logged in!", username));
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));

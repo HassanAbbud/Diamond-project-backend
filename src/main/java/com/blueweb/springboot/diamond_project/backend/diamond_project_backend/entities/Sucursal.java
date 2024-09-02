@@ -37,7 +37,7 @@ public class Sucursal {
     private String estado;
 
     @NotNull
-    private boolean activo;
+    private Boolean activo;
     
     @Embedded
     private Auditable audit = new Auditable();
@@ -86,20 +86,12 @@ public class Sucursal {
         this.estado = estado;
     }
 
-    public boolean isActivo() {
+    public Boolean isActivo() {
         return activo;
     }
 
-    public void setActivo(boolean activo) {
+    public void setActivo(Boolean activo) {
         this.activo = activo;
-    }
-
-    public Auditable getAudit() {
-        return audit;
-    }
-
-    public void setAudit(Auditable audit) {
-        this.audit = audit;
     }
 
     public User getUsuario() {

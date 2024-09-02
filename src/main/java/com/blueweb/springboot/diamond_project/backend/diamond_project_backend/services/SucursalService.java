@@ -12,7 +12,7 @@ public interface SucursalService {
 
     Sucursal create(Sucursal sucursal);
 
-    Optional<Sucursal> update(Long id);
+    Optional<Sucursal> update(Long id, Sucursal sucursal);
 
     Optional<Sucursal> delete(Long id);
 }

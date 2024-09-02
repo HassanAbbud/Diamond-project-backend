@@ -10,9 +10,9 @@ public interface EmpresaService {
 
     Optional<Empresa> findById(Long id);
 
-    Empresa create(Empresa empresa);
+    Empresa create(Empresa empresa, Long userId);
 
-    Optional<Empresa> update(Long id);
+    Optional<Empresa> update(Long id, Empresa empresa);
 
     Optional<Empresa> delete(Long id);
 }

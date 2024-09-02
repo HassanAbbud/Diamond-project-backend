@@ -1,5 +1,6 @@
 package com.blueweb.springboot.diamond_project.backend.diamond_project_backend.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,22 +20,22 @@ public class Empresa {
     private Long idEmpresa;
 
     @NotNull 
-    @Size(min = 3, max = 3, message = "Clave solo puede contener 3 caracteres")
+    @Size(min = 3, max = 3, message = "solo puede contener 3 caracteres")
     private String claveEmpresa;
 
     @NotNull
-    @Size(max = 50, message = "Nombre de empresa no puede tener más de 50 caracteres")
+    @Size(max = 50, message = "no puede tener más de 50 caracteres")
     private String nombreEmpresa;
 
     @NotNull
-    private boolean activo;
+    private Boolean activo;
 
     @Embedded
     private Auditable audit = new Auditable();
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idUsuario")
-    private User idUsuario;
+    private User usuario;
 
     public Long getIdEmpresa() {
         return idEmpresa;
@@ -60,28 +61,20 @@ public class Empresa {
         this.nombreEmpresa = nombreEmpresa;
     }
 
-    public boolean isActivo() {
+    public Boolean isActivo() {
         return activo;
     }
 
-    public void setActivo(boolean activo) {
+    public void setActivo(Boolean activo) {
         this.activo = activo;
     }
 
-    public Auditable getAudit() {
-        return audit;
+    public User getUsuario() {
+        return usuario;
     }
 
-    public void setAudit(Auditable audit) {
-        this.audit = audit;
-    }
-
-    public User getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(User idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(User usuario) {
+        this.usuario = usuario;
     }
 
 }

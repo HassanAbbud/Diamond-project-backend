@@ -23,12 +23,13 @@ public class Auditable {
     public void prePersist() {
         System.out.println("Entity object lifecycle event pre-persist");
         this.fechaAlta = LocalDateTime.now();
+        this.fechaServidor = LocalDateTime.now();
     }
-
+    
     //Consultar si este dato se refiere a cuando un producto es borrado (post-remove)
     @PreRemove
     public void postRemove(){
-        System.out.println("Entity object lifecycle event post-remove");
+        System.out.println("Entity object lifecycle event pre-remove");
         this.fechaBaja = LocalDateTime.now();
     }
 
