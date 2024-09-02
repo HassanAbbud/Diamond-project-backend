@@ -26,7 +26,7 @@ import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.se
 import com.blueweb.springboot.diamond_project.backend.diamond_project_backend.security.filters.JwtValidationFilter;
 
 @Configuration
-@EnableWebSecurity()
+@EnableWebSecurity
 public class SpringSecurity {
 
     @Autowired

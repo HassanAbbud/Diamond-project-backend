@@ -1,5 +1,6 @@
 package com.blueweb.springboot.diamond_project.backend.diamond_project_backend.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class Sucursal {
     private Long idSucursal;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idEmpresa")
     private Empresa empresa;
 
@@ -42,7 +43,7 @@ public class Sucursal {
     @Embedded
     private Auditable audit = new Auditable();
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idUsuario")
     private User usuario;
 

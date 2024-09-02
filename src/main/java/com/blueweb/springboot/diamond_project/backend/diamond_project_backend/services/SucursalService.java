@@ -10,7 +10,9 @@ public interface SucursalService {
 
     Optional<Sucursal> findById(Long id);
 
-    Sucursal create(Sucursal sucursal);
+    Sucursal createWithExistingEmpresa(Sucursal sucursal, Long userId, Long empresaId);
+
+    Sucursal createWithNewEmpresa(Sucursal sucursal, Long userId);
 
     Optional<Sucursal> update(Long id, Sucursal sucursal);
 
