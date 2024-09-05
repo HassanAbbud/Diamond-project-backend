@@ -41,7 +41,7 @@ public class Empresa {
     private User usuario;
 
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Sucursal> sucusales; 
+    private List<Sucursal> sucursales; 
 
     public Long getIdEmpresa() {
         return idEmpresa;
