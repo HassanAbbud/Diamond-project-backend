@@ -86,7 +86,7 @@ public class SucursalController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
         }
     }    
-
+    
     //since empresa cant be null body must have empresa{}
     @PutMapping("/{id}")
     public ResponseEntity<?> updateSucursal(@Valid @RequestBody Sucursal sucursal, BindingResult result, @PathVariable Long id) {

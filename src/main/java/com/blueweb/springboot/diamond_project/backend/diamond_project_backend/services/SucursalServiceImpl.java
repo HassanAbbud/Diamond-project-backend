@@ -84,6 +84,7 @@ public class SucursalServiceImpl implements SucursalService{
             sucursalDb.setNombreSucursal(sucursal.getNombreSucursal());
             sucursalDb.setEstado(sucursal.getEstado());
             sucursalDb.setActivo(sucursal.isActivo());
+            sucursalDb.setCiudad(sucursal.getCiudad());
             sucursalDb.setUsuario(sucursalDb.getUsuario());
             
             sucursalRepository.save(sucursalDb);
