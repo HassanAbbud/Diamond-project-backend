@@ -51,6 +51,7 @@ public class SpringSecurity {
             .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
             .requestMatchers(HttpMethod.PUT, "/api/users/secure-password/{id}").permitAll()
+            .requestMatchers(HttpMethod.PUT, "/api/users/check-token").authenticated()
             .anyRequest().authenticated()) //authenticated testing 
         .addFilter(new JwtAuthenticationFilter(authenticationManager()))
         .addFilter(new JwtValidationFilter(authenticationManager(), userRepository))
