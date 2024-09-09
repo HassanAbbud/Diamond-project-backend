@@ -40,6 +40,7 @@ public class Empresa {
     @JoinColumn(name = "idUsuario")
     private User usuario;
 
+    //When a empresa is deleted its related sucursales will be deleted too
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sucursal> sucursales; 
 
