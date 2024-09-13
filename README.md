@@ -1,16 +1,13 @@
 ﻿
 # Diamond project
 
-Spring boot backend for Angular project using PrimeNG Diamond template
-
-
-
+Spring boot backend for Angular project using PrimeNG Diamond template, this app implements CRUD operations for "Usuarios" to manage "Empresas" and "Sucursales" (users, companies, and branches respectively). And handles the relationships between Companies and Branches. The project uses spring security with JWT tokens to authenticate users and restrict operations if the user is not authenticated.
 
 ## Application properties
 
-To run this project, you will need to have create an application.properties file and have your own database.
+To run this project, you will need to have your own database and define it in application.properties.
 
-You should edit the provided application-template.properties into a application.properties and provide your actual configuration.
+The provided application-template.properties shows how you can setup a localhost mySQL database.
 ```java
 spring.application.name=diamond-project-backend
 spring.output.ansi.enabled=always
